@@ -1,1 +1,172 @@
-hlo
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Todo App</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      background: white;
+      padding: 30px 25px;
+      border-radius: 16px;
+      width: 340px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+    }
+
+    h2 {
+      text-align: center;
+      font-size: 22px;
+      font-weight: 700;
+      color: #333;
+      margin-bottom: 20px;
+      letter-spacing: 0.5px;
+    }
+
+    .input-row {
+      display: flex;
+      gap: 8px;
+    }
+
+    input {
+      flex: 1;
+      padding: 10px 14px;
+      border: 1.5px solid #ddd;
+      border-radius: 8px;
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    input:focus {
+      border-color: #667eea;
+    }
+
+    button {
+      padding: 10px 16px;
+      cursor: pointer;
+      background: #667eea;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      transition: background 0.2s, transform 0.1s;
+    }
+
+    button:hover {
+      background: #5a6fd6;
+    }
+
+    button:active {
+      transform: scale(0.97);
+    }
+
+    ul {
+      list-style: none;
+      margin-top: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    li {
+      padding: 10px 14px;
+      background: #f4f4f4;
+      border-left: 4px solid #667eea;
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: background 0.2s;
+    }
+
+    li:hover {
+      background: #ececec;
+    }
+
+    li.completed {
+      border-left-color: #aaa;
+      background: #f9f9f9;
+    }
+
+    li.completed span {
+      text-decoration: line-through;
+      color: #aaa;
+    }
+
+    li span {
+      font-size: 14px;
+      color: #333;
+      cursor: pointer;
+      flex: 1;
+    }
+
+    .delete {
+      background: #ff5c5c;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 600;
+      transition: background 0.2s;
+    }
+
+    .delete:hover {
+      background: #e04444;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>📝 Todo List</h2>
+    <div class="input-row">
+      <input type="text" id="taskInput" placeholder="Enter a task...">
+      <button onclick="addTask()">Add</button>
+    </div>
+    <ul id="taskList"></ul>
+  </div>
+
+  <script>
+    function addTask() {
+      const input = document.getElementById("taskInput");
+      const taskText = input.value.trim();
+      if (taskText === "") return;
+      const li = document.createElement("li");
+      li.innerHTML = `
+        <span onclick="toggleComplete(this)">${taskText}</span>
+        <button class="delete" onclick="deleteTask(this)">Delete</button>
+      `;
+      document.getElementById("taskList").appendChild(li);
+      input.value = "";
+    }
+
+    function deleteTask(button) {
+      button.parentElement.remove();
+    }
+
+    function toggleComplete(element) {
+      element.parentElement.classList.toggle("completed");
+    }
+
+    document.getElementById("taskInput").addEventListener("keydown", function(e) {
+      if (e.key === "Enter") addTask();
+    });
+  </script>
+</body>
+</html>
